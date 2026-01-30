@@ -1,0 +1,48 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+    public class YandexMarketTest {
+
+        public static void main(String[] args) {
+
+            WebDriver driver = new ChromeDriver();
+
+            try {
+                // Тест-кейс 1: Открытие главной страницы
+                driver.get("https://market.yandex.ru");
+                driver.manage().window().maximize();
+                System.out.println("Тест 1: Главная страница открыта");
+
+                // Тест-кейс 2: Поиск товара
+                WebElement search = driver.findElement(By.name("text"));
+                search.sendKeys("наушники");
+                search.sendKeys(Keys.ENTER);
+                System.out.println("Тест 2: Поиск выполнен");
+
+                // Небольшая пауза, чтобы страница загрузилась
+                Thread.sleep(3000);
+
+                // Тест-кейс 3: Проверка, что есть результаты
+                WebElement results = driver.findElement(By.tagName("article"));
+                if (results.isDisplayed()) {
+                    System.out.println("Тест 3: Результаты поиска отображаются");
+                }
+
+                // Тест-кейс 4: Открытие карточки товара
+                results.click();
+                System.out.println("Тест 4: Карточка товара открыта");
+
+            } catch (Exception e) {
+                System.out.println("Ошибка во время тестирования");
+                e.printStackTrace();
+            } finally {
+                // Закрытие браузера
+                driver.quit();
+                System.out.println("Тестирование завершено");
+            }
+        }
+    }
+
